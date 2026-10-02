@@ -1,30 +1,21 @@
 [gd_scene format=3 uid="uid://jd5tk3wf16gt"]
 
-[ext_resource type="Theme" uid="uid://de7fb8k462lxb" path="res://Theme/PopTheme.tres" id="1_02akb"]
-[ext_resource type="Script" uid="uid://tfxg61k3n7qu" path="res://addons/cptcreator/ship_part_editor.gd" id="1_c0ovd"]
-[ext_resource type="Texture2D" uid="uid://dwwluk8xikvpe" path="res://Assets/Items/cubeforcesmol.png" id="2_c0ovd"]
-[ext_resource type="Texture2D" uid="uid://d1yk65ppopgv7" path="res://Assets/Items/Fuel.png" id="3_02akb"]
-[ext_resource type="Texture2D" uid="uid://s2ao6bntsnmw" path="res://Assets/Items/upgrade.png" id="4_swiop"]
-[ext_resource type="Texture2D" uid="uid://3q376ia6bctu" path="res://Assets/Items/Wrench.png" id="5_lypsq"]
-[ext_resource type="PackedScene" uid="uid://c1dta5ogorg77" path="res://addons/cptcreator/CPT_CR_ship_stat_container.tscn" id="7_02akb"]
+[ext_resource type="Script" uid="uid://tfxg61k3n7qu" path="res://CaptainCreator/ship_part_editor.gd" id="1_xtwik"]
+[ext_resource type="PackedScene" uid="uid://c1dta5ogorg77" path="res://CaptainCreator/CPT_CR_ship_stat_container.tscn" id="7_02akb"]
 
-[node name="ShipPartEditor" type="EditorDock" unique_id=2098373007 node_paths=PackedStringArray("ItemMenu", "ItemNameLabel", "ItemDescLabel", "slider")]
+[node name="ShipPartEditor" type="Control" unique_id=1883949158]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_02akb")
-title = "Ship Part Editor"
-default_slot = 4
-script = ExtResource("1_c0ovd")
-ItemMenu = NodePath("ScrollContainer/VBoxContainer/PanelContainer2/HBoxContainer/MenuBar/Items")
-ItemNameLabel = NodePath("ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/Label")
-ItemDescLabel = NodePath("ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/Label2")
-slider = NodePath("ScrollContainer/VBoxContainer/PanelContainer/VBoxContainer/ShipStatContainer")
+script = ExtResource("1_xtwik")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1731917031]
-layout_mode = 2
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1090521749]
 layout_mode = 2
@@ -46,16 +37,12 @@ auto_translate_mode = 1
 size = Vector2i(100, 251)
 item_count = 75
 item_0/text = "Material"
-item_0/icon = ExtResource("2_c0ovd")
 item_0/id = 0
 item_1/text = "Radioactive"
-item_1/icon = ExtResource("3_02akb")
 item_1/id = 1
 item_2/text = "Recruitment"
-item_2/icon = ExtResource("4_swiop")
 item_2/id = 2
 item_3/text = "Supply"
-item_3/icon = ExtResource("5_lypsq")
 item_3/id = 3
 item_4/text = "Armor-Piercing Magazine 100mm"
 item_4/id = 4

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DispositionRewards" format=3 uid="uid://b7el10jhpmkwh"]
+
+[ext_resource type="Script" uid="uid://b440ymk6opetf" path="res://MetalEngineBase/Disposition/Dispotition.gd" id="1_rueag"]
+[ext_resource type="Script" uid="uid://7vx0cscgmihh" path="res://MetalEngineBase/Disposition/DispositionRewards.gd" id="2_wujhh"]
+
+[resource]
+script = ExtResource("2_wujhh")
+metadata/_custom_type_script = "uid://7vx0cscgmihh"

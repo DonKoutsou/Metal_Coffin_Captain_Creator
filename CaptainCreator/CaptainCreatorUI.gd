@@ -18,8 +18,12 @@ var CurrentlySelectedCap : Captain
 @export var Inventory : CharacterInventoryInterface
 @export var Stats : CPT_CR_InventoryShipStats
 @export var Disp : CaptainDispositionUI
+@export var d : ShipDeckViz
 @export var DispSliderParent : Control
 var ShowItemStats = true
+
+var startingDir : String = ""
+var projPath : String = ""
 
 #------------------------------------------------------------
 func _enter_tree() -> void:
@@ -45,7 +49,7 @@ func RefreshCharacters() -> void:
 	Menu.clear()
 	Captains.clear()
 	
-	var DirsToExplore :Array[String] = ["res://Resources/Captains/"]
+	var DirsToExplore :Array[String] = [startingDir + "/Captains"]
 	for g in DirsToExplore:
 		var dir = DirAccess.open(g)
 		if dir:
@@ -56,12 +60,14 @@ func RefreshCharacters() -> void:
 					print("Found directory: " + file_name)
 					DirsToExplore.append(g + "/" + file_name)
 				else:
-					print("Found file: " + file_name)
-					var cap = load(g + "/" + file_name)
-					if (cap is Captain):
-						Captains.append(cap)
-						CheckForIssues(cap)
-						Menu.add_item(cap.GetCaptainName())
+					print("Found file: " + g + "/" + file_name)
+					if (file_name.ends_with(".tres")):
+						var cap = load(g + "/" + file_name)
+						if (cap is Captain):
+							Captains.append(cap)
+							CheckForIssues(cap)
+							Menu.add_item(cap.GetCaptainName())
+							print("Captain Added: " + file_name)
 				
 				file_name = dir.get_next()
 	
@@ -81,8 +87,12 @@ func RefrshExistingItems() -> void:
 					DirsToExplore.append(g + "/" + file_name)
 				else:
 					print("Found file: " + file_name)
-					var It = load(g + "/" + file_name)
-					Items.append(It)
+					if (file_name.ends_with(".remap")):
+						var path = g + "/" + file_name.replace(".remap", "")
+						var It = load(path)
+						if (It is Item):
+							Items.append(It)
+							print("Item Added: " + path)
 				
 				file_name = dir.get_next()
 				
@@ -131,21 +141,16 @@ func CheckForIssues(C : Captain) -> void:
 
 #------------------------------------------------------------
 func SetCaptain(C : Captain) -> void:
-	
 	CurrentlySelectedCap = C
 	CaptainName.text = C.GetCaptainName()
 	ShipIcon.texture = ResourceLoader.load(C.ShipIconFile)
-	
-	print(C.ProvidingFunds)
 
-	
 	CheckForIssues(C)
-	
 
 	UpdateInventoryBoxes()
 	UpdateDispositionSliders()
+	d.SetDeck(CurrentlySelectedCap)
 	
-		
 	SaveCurrentCap()
 	
 #------------------------------------------------------------
@@ -155,6 +160,9 @@ func _on_chaptain_select_index_pressed(index: int) -> void:
 #------------------------------------------------------------
 func SaveCurrentCap() -> void:
 	ResourceSaver.save(CurrentlySelectedCap, CurrentlySelectedCap.resource_path)
+	var targetPath = CurrentlySelectedCap.resource_path.replace("res://", projPath)
+	ResourceSaver.save(CurrentlySelectedCap, targetPath)
+	print("Saved captain in {0}".format([targetPath]))
 
 #------------------------------------------------------------
 func InventorySizeChanged() -> void:
@@ -170,6 +178,7 @@ func UpdateInventoryBoxes() -> void:
 	Inventory.InitialiseInventory(CurrentlySelectedCap)
 	Stats.SetCaptainEditor(CurrentlySelectedCap, ShowItemStats)
 	Disp.SetStats(CurrentlySelectedCap)
+	d.SetDeck(CurrentlySelectedCap)
 	SelectedBox = null
 
 func UpdateDispositionSliders() -> void:
@@ -250,7 +259,7 @@ func _on_item_select_index_pressed(index: int) -> void:
 	SaveCurrentCap()
 	UpdateInventoryBoxes()
 
-#------------------------------------------------------------
+#------------------------------------------------------------"ItemName"
 func _on_cap_name_text_changed() -> void:
 	var NewLine = CaptainName.text
 	print("Changed {0}'s name to {1} and saved to file {2}".format([CurrentlySelectedCap.GetCaptainName(), NewLine, CurrentlySelectedCap.resource_path]))
@@ -296,10 +305,11 @@ func FindSliderWithStat(St : STAT_CONST.STATS) -> CapCrStatSlider:
 
 #------------------------------------------------------------
 func _on_change_pic_pressed() -> void:
-	var fd = EditorFileDialog.new()
+	var fd = FileDialog.new()
 	#fd.mode = Window.MODE_EXCLUSIVE_FULLSCREEN
-	fd.access = EditorFileDialog.ACCESS_RESOURCES
-	EditorInterface.get_base_control().add_child(fd)
+	fd.access = FileDialog.ACCESS_RESOURCES
+	fd.use_native_dialog = true
+	add_child(fd)
 	fd.connect("file_selected", NewPicSelected)
 	fd.popup_file_dialog()
 	#get_parent().add_child(fd)
@@ -312,10 +322,11 @@ func NewPicSelected(NewPic) -> void:
 
 #------------------------------------------------------------
 func _on_change_ship_icon_pressed() -> void:
-	var fd = EditorFileDialog.new()
+	var fd = FileDialog.new()
 	#fd.mode = Window.MODE_EXCLUSIVE_FULLSCREEN
-	fd.access = EditorFileDialog.ACCESS_RESOURCES
-	EditorInterface.get_base_control().add_child(fd)
+	fd.access = FileDialog.ACCESS_RESOURCES
+	fd.use_native_dialog = true
+	add_child(fd)
 	fd.connect("file_selected", NewShipPicSelected)
 	fd.popup_file_dialog()
 	#get_parent().add_child(fd)
@@ -345,3 +356,4 @@ func _on_inventory_ship_stats_stat_changed(stat : STAT_CONST.STATS, value : floa
 	else:
 		CurrentlySelectedCap._GetStat(stat).StatBase = value
 	UpdateInventoryBoxes()
+	SaveCurrentCap()
