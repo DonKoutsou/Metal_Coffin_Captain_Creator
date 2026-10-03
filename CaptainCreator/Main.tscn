@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://de7fb8k462lxb" path="res://MetalEngineBase/Theme/PopTheme.tres" id="1_qybm7"]
 [ext_resource type="StyleBox" uid="uid://ci3yyoa54a17w" path="res://MetalEngineBase/Inventory/YellowPanel.tres" id="1_sqhvk"]
 [ext_resource type="Script" uid="uid://mapkl2p7siww" path="res://CaptainCreator/main.gd" id="2_hy538"]
-[ext_resource type="PackedScene" uid="uid://sf4cxl8op2tv" path="res://PackerData/ResourcePicker.tscn" id="3_hy538"]
+[ext_resource type="PackedScene" uid="uid://sf4cxl8op2tv" path="res://MetalEngineBase/Utils/ResourcePicker.tscn" id="3_hy538"]
 [ext_resource type="PackedScene" uid="uid://bni46rep6ub0v" path="res://CaptainCreator/CaptainCreatorUI.tscn" id="3_lnq3v"]
 
 [node name="Main" type="PanelContainer" unique_id=2109229134 node_paths=PackedStringArray("resPicker", "BasePackPicker")]
@@ -46,6 +46,7 @@ text = "Base Pack"
 [node name="BasePack" parent="MarginContainer/VBoxContainer" unique_id=1197810020 instance=ExtResource("3_hy538")]
 layout_mode = 2
 size_flags_vertical = 4
+resource_Tyoes = PackedStringArray("*.pck")
 
 [node name="Ready" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1994471850]
 layout_mode = 2
