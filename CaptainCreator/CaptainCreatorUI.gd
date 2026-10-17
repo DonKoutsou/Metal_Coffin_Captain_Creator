@@ -159,9 +159,11 @@ func _on_chaptain_select_index_pressed(index: int) -> void:
 
 #------------------------------------------------------------
 func SaveCurrentCap() -> void:
+	var prevUID = CptHelper.get_uid_from_tres(CurrentlySelectedCap.resource_path)
 	ResourceSaver.save(CurrentlySelectedCap, CurrentlySelectedCap.resource_path)
 	var targetPath = CurrentlySelectedCap.resource_path.replace("res://", projPath)
 	ResourceSaver.save(CurrentlySelectedCap, targetPath)
+	CptHelper.write_uid_to_tres(targetPath, prevUID)
 	print("Saved captain in {0}".format([targetPath]))
 
 #------------------------------------------------------------
@@ -262,9 +264,11 @@ func _on_item_select_index_pressed(index: int) -> void:
 #------------------------------------------------------------"ItemName"
 func _on_cap_name_text_changed() -> void:
 	var NewLine = CaptainName.text
+	var prevUID = CptHelper.get_uid_from_tres(CurrentlySelectedCap.resource_path)
 	print("Changed {0}'s name to {1} and saved to file {2}".format([CurrentlySelectedCap.GetCaptainName(), NewLine, CurrentlySelectedCap.resource_path]))
 	CurrentlySelectedCap.CaptainName = NewLine
 	ResourceSaver.save(CurrentlySelectedCap, CurrentlySelectedCap.resource_path)
+	CptHelper.write_uid_to_tres(CurrentlySelectedCap.resource_path, prevUID)
 
 
 ## ITEMS
