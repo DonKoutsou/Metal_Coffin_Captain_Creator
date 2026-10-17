@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bmphhoyeaybu4"]
+
+[ext_resource type="PackedScene" uid="uid://muscxdppqdat" path="res://MetalEngineBase/Disposition/DispositionUI/CaptainsDispotitionUI.tscn" id="1_xcgob"]
+[ext_resource type="Script" uid="uid://c5lpcg124sy1u" path="res://CaptainCreator/CP_CR_CaptainDispositionUI.gd" id="2_u7qsl"]
+
+[node name="DispositionUI" unique_id=687125661 instance=ExtResource("1_xcgob")]
+script = ExtResource("2_u7qsl")
+DispositionColors = []

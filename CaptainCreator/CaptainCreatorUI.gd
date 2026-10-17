@@ -149,6 +149,7 @@ func SetCaptain(C : Captain) -> void:
 
 	UpdateInventoryBoxes()
 	UpdateDispositionSliders()
+	
 	d.SetDeck(CurrentlySelectedCap)
 	
 	SaveCurrentCap()
@@ -174,13 +175,21 @@ func InventorySizeChanged() -> void:
 func UpdateInventoryBoxes() -> void:
 	if (CurrentlySelectedCap._CharInv != null):
 		CurrentlySelectedCap._CharInv.queue_free()
-		
+	
 	var newInventory = CharacterInventory.newInv(CurrentlySelectedCap)
 	CurrentlySelectedCap.RegisterInventory(newInventory)
 	Inventory.InitialiseInventory(CurrentlySelectedCap)
+	
+	#Update Stats
 	Stats.SetCaptainEditor(CurrentlySelectedCap, ShowItemStats)
-	Disp.SetStats(CurrentlySelectedCap)
+	
+	#Update disposition
+	Disp.GetCharacterEditorDisp(CurrentlySelectedCap)
+	Disp.queue_redraw()
+	
+	#Update deck
 	d.SetDeck(CurrentlySelectedCap)
+	
 	SelectedBox = null
 
 func UpdateDispositionSliders() -> void:
@@ -217,7 +226,11 @@ var SelectedBox : Inventory_Box_Res
 #------------------------------------------------------------
 func ItemSelected(It : Inventory_Box_Res) -> void:
 	SelectedBox = It
-	ItemText.text = "{0}\n{1}".format([It._ContainedItem.ItemName, It._ContainedItem.GetItemDesc()])
+	#Make sure to load item from mod
+	var actualPath = It._ContainedItem.resource_path.replace("res:/", Main.dirs.ModDir)
+	var actuallIt : Item = load(actualPath)
+	
+	ItemText.text = "{0}\n{1}\n[color=#ffc315]VALUE[/color] : {2}".format([actuallIt.ItemName, actuallIt.GetItemDesc(), actuallIt.Cost])
 
 #------------------------------------------------------------
 func _on_remove_item_pressed() -> void:

@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://b1k2h35khc40y" path="res://MetalEngineBase/Inventory/InventoryBox.tscn" id="4_yrrrb"]
 [ext_resource type="Script" uid="uid://bcrnrsyr12m2a" path="res://MetalEngineBase/Utils/InputScroll.gd" id="5_wi1ms"]
 [ext_resource type="PackedScene" uid="uid://dil6hywhdoauc" path="res://MetalEngineBase/Inventory/ship_deck.tscn" id="8_wi1ms"]
+[ext_resource type="Script" uid="uid://c5lpcg124sy1u" path="res://CaptainCreator/CP_CR_CaptainDispositionUI.gd" id="9_ciiba"]
 [ext_resource type="PackedScene" uid="uid://b3x1oefmigg0c" path="res://CaptainCreator/CPT_inventory_interface.tscn" id="9_tnq84"]
+[ext_resource type="Script" uid="uid://iipfkr8dt0d0" path="res://CaptainCreator/CP_CR_ShipDeckViz.gd" id="11_h4iyt"]
 [ext_resource type="PackedScene" uid="uid://muscxdppqdat" path="res://MetalEngineBase/Disposition/DispositionUI/CaptainsDispotitionUI.tscn" id="11_vd57e"]
 [ext_resource type="PackedScene" uid="uid://bbxyip8ihbpfo" path="res://CaptainCreator/CP_CR_inventory_ship_stats.tscn" id="12_vd57e"]
 
@@ -252,6 +254,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 size_flags_vertical = 0
+script = ExtResource("9_ciiba")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer/PanelContainer2/VBoxContainer" unique_id=1626338858]
 layout_mode = 2
@@ -264,6 +267,7 @@ size_flags_vertical = 3
 [node name="ShipDeck" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer/PanelContainer3" unique_id=611219555 instance=ExtResource("8_wi1ms")]
 clip_contents = true
 layout_mode = 2
+script = ExtResource("11_h4iyt")
 
 [connection signal="index_pressed" from="InputScroll/VBoxContainer/PanelContainer2/HBoxContainer/MenuBar/Select Captain" to="." method="_on_chaptain_select_index_pressed"]
 [connection signal="index_pressed" from="InputScroll/VBoxContainer/PanelContainer2/HBoxContainer/MenuBar/Add Item" to="." method="_on_item_select_index_pressed"]

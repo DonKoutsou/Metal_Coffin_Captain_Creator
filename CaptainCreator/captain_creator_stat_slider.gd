@@ -12,13 +12,15 @@ var ItemPenaltyStat : float = 0
 
 func SetData(Stat : STAT_CONST.STATS) -> void:
 	super(Stat)
-
+	
 	$HSlider.min_value = 0
 	var MaxV = STAT_CONST.GetStatMaxValue(STName)
 	if (MaxV >= 1000):
 		$HSlider.step = 10
 	$HSlider.max_value = MaxV
 	
+	$HSlider.visible = STAT_CONST.CanHaveBase[Stat]
+		
 
 #used for "custom" stats that are pseudo stat, created from the combination of others, like speed and range
 func SetDataCustom(MaxValue : float, StatMetric : String, StatName : String, Stat : STAT_CONST.STATS, step : float = 1.0) -> void:
@@ -26,6 +28,7 @@ func SetDataCustom(MaxValue : float, StatMetric : String, StatName : String, Sta
 	
 	slider.max_value = MaxValue
 	slider.step = step
+	$HSlider.visible = STAT_CONST.CanHaveBase[Stat]
 
 func UpdateStatCustom(StatVal : float, ItemVar : float, ItemPenalty : float) -> void:
 	super(StatVal, ItemVar, ItemPenalty)

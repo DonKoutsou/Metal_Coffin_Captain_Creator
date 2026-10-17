@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://b7v631q26lusx"]
+
+[ext_resource type="PackedScene" uid="uid://cr6qn30drails" path="res://MetalEngineBase/Inventory/inventory_ship_stats.tscn" id="1_v3njd"]
+
+[node name="InventoryShipStats" unique_id=826388942 instance=ExtResource("1_v3njd")]
