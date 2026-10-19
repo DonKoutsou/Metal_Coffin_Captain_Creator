@@ -161,11 +161,28 @@ func _on_chaptain_select_index_pressed(index: int) -> void:
 #------------------------------------------------------------
 func SaveCurrentCap() -> void:
 	var prevUID = CptHelper.get_uid_from_tres(CurrentlySelectedCap.resource_path)
-	ResourceSaver.save(CurrentlySelectedCap, CurrentlySelectedCap.resource_path)
+	#ResourceSaver.save(CurrentlySelectedCap, CurrentlySelectedCap.resource_path)
 	var targetPath = CurrentlySelectedCap.resource_path.replace("res://", projPath)
+	
+	#for dep : String in ResourceLoader.get_dependencies(CurrentlySelectedCap.resource_path):
+		#if (dep.ends_with(".tres")):
+			#var dependencyTargetPath = dep.replace("res:/", projPath)
+			#var dependencyPrevUID = CptHelper.get_uid_from_tres(dependencyTargetPath)
+			#CptHelper.write_uid_to_tres(dep, dependencyPrevUID)
+			#var loadedDep = load(dep)
+			#ResourceUID.set_id(ResourceUID.text_to_id(dependencyPrevUID), dep)
+			#ResourceSaver.save(loadedDep, loadedDep.resource_path)
+			#ResourceSaver.save(CurrentlySelectedCap, CurrentlySelectedCap.resource_path)
+	
 	ResourceSaver.save(CurrentlySelectedCap, targetPath)
+	
 	CptHelper.write_uid_to_tres(targetPath, prevUID)
+	
+	
+	
 	print("Saved captain in {0}".format([targetPath]))
+
+
 
 #------------------------------------------------------------
 func InventorySizeChanged() -> void:

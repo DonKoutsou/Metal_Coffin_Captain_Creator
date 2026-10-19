@@ -2,6 +2,8 @@ extends RefCounted
 
 class_name CptHelper
 
+#--------------------------------------------------------
+##Reads the .tres file and takes out the UID from it
 static func get_uid_from_tres(path: String) -> String:
 	if not FileAccess.file_exists(path):
 		return ""
@@ -22,6 +24,8 @@ static func get_uid_from_tres(path: String) -> String:
 
 	return ""
 
+#--------------------------------------------------------
+##Opens the .tres file witout loading it and writes in the UID to it
 static func write_uid_to_tres(path: String, uid: String) -> bool:
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
@@ -57,11 +61,42 @@ static func write_uid_to_tres(path: String, uid: String) -> bool:
 	if file == null:
 		return false
 
-	file.store_string(content)
+	var fixed_text := restore_dependency_uids(content)
+	file.store_string(fixed_text)
+	
 	file.close()
 	return true
 
+#--------------------------------------------------------
+## Goes through each dependency, tries to recover their UID and put it into the .tres file
+##This is to be used for .tres files that lose the UID of their dependencies when loaded through a pck
+static func restore_dependency_uids(text: String) -> String:
+	var path_regex := RegEx.new()
+	path_regex.compile('path="([^"]+)"')
 
+	var output := PackedStringArray()
+
+	for line in text.split("\n"):
+		if line.begins_with("[ext_resource ") \
+		and not line.contains('uid="'):
+			var match_result := path_regex.search(line)
+
+			if match_result:
+				var path := match_result.get_string(1)
+				var uid := ResourceLoader.get_resource_uid(path)
+
+				if uid != ResourceUID.INVALID_ID:
+					var uid_text := ResourceUID.id_to_text(uid)
+					line = line.replace(
+						'path="',
+						'uid="%s" path="' % uid_text
+					)
+
+		output.append(line)
+
+	return "\n".join(output)
+
+#--------------------------------------------------------
 static func get_target_path_from_remap(remap_file_path: String) -> String:
 	var config = ConfigFile.new()
 	var err = config.load(remap_file_path)
@@ -75,6 +110,7 @@ static func get_target_path_from_remap(remap_file_path: String) -> String:
 	print("Failed to parse remap file: ", remap_file_path)
 	return ""
 
+#--------------------------------------------------------
 static func GetFilePathFromUID(projectPath : String ,UID : String) -> String:
 	# 1. Point to the unpacked .godot cache folder
 	var virtual_cache_path = projectPath + "/.godot/uid_cache.bin"
