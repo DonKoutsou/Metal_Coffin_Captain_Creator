@@ -32,6 +32,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1159079426]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Project Path"
 
 [node name="ResourcePicker" parent="MarginContainer/VBoxContainer" unique_id=316868228 instance=ExtResource("3_hy538")]
@@ -41,6 +42,7 @@ resource_Type = 2
 
 [node name="Label3" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1262982644]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Base Pack"
 
 [node name="BasePack" parent="MarginContainer/VBoxContainer" unique_id=1197810020 instance=ExtResource("3_hy538")]

@@ -26,13 +26,18 @@ file_logging/enable_file_logging=true
 
 [display]
 
-window/size/viewport_width=1150
-window/size/viewport_height=1500
+window/size/viewport_width=1500
+window/size/viewport_height=1150
 window/size/extend_to_title=true
 window/size/sharp_corners=true
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="canvas_items"
-window/stretch/aspect="ignore"
+
+[file_customization]
+
+folder_colors={
+"res://MetalEngineBase/": "yellow"
+}
 
 [gui]
 

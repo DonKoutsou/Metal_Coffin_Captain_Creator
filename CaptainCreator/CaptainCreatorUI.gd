@@ -21,6 +21,8 @@ var CurrentlySelectedCap : Captain
 @export var d : ShipDeckViz
 @export var DispSliderParent : Control
 @export var colBox : SpinBox
+@export var upButton : Button
+@export var menu : PopupMenu
 var ShowItemStats = true
 
 var startingDir : String = ""
@@ -46,8 +48,7 @@ func DispositionChanged(Stat : STAT_CONST.STATS, newValue : float, disp : Dispos
 
 #------------------------------------------------------------
 func RefreshCharacters() -> void:
-	var Menu = $"InputScroll/VBoxContainer/PanelContainer2/HBoxContainer/MenuBar/Select Captain" as PopupMenu
-	Menu.clear()
+	menu.clear()
 	Captains.clear()
 	
 	var DirsToExplore :Array[String] = [startingDir + "/Captains"]
@@ -67,7 +68,7 @@ func RefreshCharacters() -> void:
 						if (cap is Captain):
 							Captains.append(cap)
 							CheckForIssues(cap)
-							Menu.add_item(cap.GetCaptainName())
+							menu.add_item(cap.GetCaptainName())
 							print("Captain Added: " + file_name)
 				
 				file_name = dir.get_next()
@@ -150,6 +151,7 @@ func SetCaptain(C : Captain) -> void:
 	shader.set_shader_parameter("palette_texture", ResourceLoader.load(dat.hull_Pallete))
 	shader.set_shader_parameter("palette_index", C.col)
 	var palSize = C.GetPalletSize()
+	colBox.set_value_no_signal(C.col)
 	colBox.max_value = palSize - 1
 	
 	CheckForIssues(C)
@@ -258,7 +260,7 @@ func ItemSelected(It : Inventory_Box_Res) -> void:
 	var actualPath = It._ContainedItem.resource_path.replace("res:/", Main.dirs.ModDir)
 	var actuallIt : Item = load(actualPath)
 	
-	$InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/PanelContainer4/VBoxContainer/PanelContainer/VBoxContainer/UpgradeItem.visible = It._ContainedItem is ShipPart
+	upButton.visible = It._ContainedItem is ShipPart
 	
 	ItemText.text = "{0}\n{1}\n[color=#ffc315]VALUE[/color] : {2}".format([actuallIt.ItemName, actuallIt.GetItemDesc(), actuallIt.Cost])
 
