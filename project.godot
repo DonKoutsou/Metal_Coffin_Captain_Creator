@@ -26,14 +26,17 @@ file_logging/enable_file_logging=true
 
 [display]
 
+window/size/viewport_width=1150
+window/size/viewport_height=1500
 window/size/extend_to_title=true
 window/size/sharp_corners=true
 window/energy_saving/keep_screen_on=false
-window/stretch/aspect="expand"
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
 
 [gui]
 
-theme/custom="uid://de7fb8k462lxb"
+theme/custom="uid://dq36vara0cacl"
 
 [input]
 

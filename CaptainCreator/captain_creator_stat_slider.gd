@@ -13,13 +13,13 @@ var ItemPenaltyStat : float = 0
 func SetData(Stat : STAT_CONST.STATS) -> void:
 	super(Stat)
 	
-	$HSlider.min_value = 0
+	$ProgressBar/HSlider.min_value = 0
 	var MaxV = STAT_CONST.GetStatMaxValue(STName)
 	if (MaxV >= 1000):
-		$HSlider.step = 10
-	$HSlider.max_value = MaxV
+		$ProgressBar/HSlider.step = 10
+	$ProgressBar/HSlider.max_value = MaxV
 	
-	$HSlider.visible = STAT_CONST.CanHaveBase[Stat]
+	$ProgressBar/HSlider.visible = STAT_CONST.CanHaveBase[Stat]
 		
 
 #used for "custom" stats that are pseudo stat, created from the combination of others, like speed and range
@@ -28,15 +28,15 @@ func SetDataCustom(MaxValue : float, StatMetric : String, StatName : String, Sta
 	
 	slider.max_value = MaxValue
 	slider.step = step
-	$HSlider.visible = STAT_CONST.CanHaveBase[Stat]
+	$ProgressBar/HSlider.visible = STAT_CONST.CanHaveBase[Stat]
 
 func UpdateStatCustom(StatVal : float, ItemVar : float, ItemPenalty : float) -> void:
 	super(StatVal, ItemVar, ItemPenalty)
-	$HSlider.set_value_no_signal(StatVal)
+	$ProgressBar/HSlider.set_value_no_signal(StatVal)
 
 func UpdateStatValue(StatVal : float, ItemVar : float, ItemPenalty : float) -> void:
 	super(StatVal, ItemVar, ItemPenalty)
-	$HSlider.set_value_no_signal(StatVal)
+	$ProgressBar/HSlider.set_value_no_signal(StatVal)
 
 func _on_h_slider_value_changed(value: float) -> void:
 	StatChanged.emit(STName, value)

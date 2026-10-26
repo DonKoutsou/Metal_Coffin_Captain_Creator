@@ -5,13 +5,20 @@
 
 [node name="ShipStatContainer" unique_id=1703653256 node_paths=PackedStringArray("slider") instance=ExtResource("1_7jaut")]
 script = ExtResource("2_n27cf")
-slider = NodePath("HSlider")
+slider = NodePath("ProgressBar/HSlider")
 
 [node name="ProgressBar" parent="." index="1" unique_id=327418]
-custom_maximum_size = Vector2(-1, 6.08)
+custom_minimum_size = Vector2(0, 20)
+custom_maximum_size = Vector2(-1, 20)
 size_flags_vertical = 3
 
-[node name="HSlider" type="HSlider" parent="." index="2" unique_id=866418811]
-layout_mode = 2
+[node name="HSlider" type="HSlider" parent="ProgressBar" index="2" unique_id=866418811]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/center_grabber = 0
 
-[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="ProgressBar/HSlider" to="." method="_on_h_slider_value_changed"]

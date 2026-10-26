@@ -1,36 +1,97 @@
 [gd_scene format=3 uid="uid://dgwm586mmvbu8"]
 
 [ext_resource type="PackedScene" uid="uid://b1k2h35khc40y" path="res://MetalEngineBase/Inventory/InventoryBox.tscn" id="1_shk70"]
+[ext_resource type="Texture2D" uid="uid://bkl12e2lf6a71" path="res://Godot-Window-98-Theme/textures/panel_container.png" id="2_3wkal"]
+[ext_resource type="Texture2D" uid="uid://ck7wkj4qk44os" path="res://Godot-Window-98-Theme/textures/button_normal.png" id="2_x3vab"]
+[ext_resource type="Texture2D" uid="uid://c7l5q42vmpnti" path="res://Godot-Window-98-Theme/textures/button_hover.png" id="3_3a6tc"]
+[ext_resource type="Texture2D" uid="uid://snelko82nays" path="res://Godot-Window-98-Theme/textures/button_focus.png" id="4_jt4i8"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shk70"]
-bg_color = Color(0.4085841, 0.40858412, 0.408584, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_inlq0"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8xpfb"]
-bg_color = Color(0.32568854, 0.32568854, 0.3256885, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v7am4"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_x3vab")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(0, 0, 23, 23)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0a5i4"]
-bg_color = Color(0.44188052, 0.44188052, 0.44188035, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b4yfs"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+texture = ExtResource("3_3a6tc")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(0, 0, 23, 23)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_780nc"]
-bg_color = Color(0.1443032, 0.14430341, 0.14430326, 1)
-corner_detail = 4
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jqd6p"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_x3vab")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(0, 0, 23, 23)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kxqei"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_x3vab")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(0, 0, 23, 23)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g3s50"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+texture = ExtResource("4_jt4i8")
+region_rect = Rect2(0, 0, 23, 23)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2u544"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+texture = ExtResource("2_3wkal")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 16, 16)
 
 [node name="InventoryBox" unique_id=1449330592 instance=ExtResource("1_shk70")]
+theme_override_styles/panel = SubResource("StyleBoxEmpty_inlq0")
 
 [node name="ItemButton" parent="." index="0" unique_id=1170581497]
-theme_override_styles/normal = SubResource("StyleBoxFlat_shk70")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_8xpfb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0a5i4")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_780nc")
+theme_override_styles/normal = SubResource("StyleBoxTexture_v7am4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_b4yfs")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jqd6p")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_kxqei")
+theme_override_styles/focus = SubResource("StyleBoxTexture_g3s50")
+
+[node name="ItemName" parent="ItemButton/HBoxContainer" parent_id_path=PackedInt32Array(1840622958) index="0" unique_id=2110085130]
+theme_override_constants/outline_size = 0
+text = ""
+
+[node name="PanelContainer" parent="ItemButton/HBoxContainer" parent_id_path=PackedInt32Array(1840622958) index="1" unique_id=1159467317]
+visible = false
+theme_override_styles/panel = SubResource("StyleBoxTexture_2u544")

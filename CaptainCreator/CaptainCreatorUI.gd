@@ -20,6 +20,7 @@ var CurrentlySelectedCap : Captain
 @export var Disp : CaptainDispositionUI
 @export var d : ShipDeckViz
 @export var DispSliderParent : Control
+@export var colBox : SpinBox
 var ShowItemStats = true
 
 var startingDir : String = ""
@@ -143,8 +144,14 @@ func CheckForIssues(C : Captain) -> void:
 func SetCaptain(C : Captain) -> void:
 	CurrentlySelectedCap = C
 	CaptainName.text = C.GetCaptainName()
-	ShipIcon.texture = ResourceLoader.load(C.ShipIconFile)
-
+	var dat : HullData = ResourceLoader.load(C.hullData)
+	ShipIcon.texture = ResourceLoader.load(dat.hullTexture)
+	var shader : ShaderMaterial = ShipIcon.material
+	shader.set_shader_parameter("palette_texture", ResourceLoader.load(dat.hull_Pallete))
+	shader.set_shader_parameter("palette_index", C.col)
+	var palSize = C.GetPalletSize()
+	colBox.max_value = palSize - 1
+	
 	CheckForIssues(C)
 
 	UpdateInventoryBoxes()
@@ -153,7 +160,12 @@ func SetCaptain(C : Captain) -> void:
 	d.SetDeck(CurrentlySelectedCap)
 	
 	SaveCurrentCap()
+
+func SetCaptainCol(index : int) -> void:
+	var shader : ShaderMaterial = ShipIcon.material
+	shader.set_shader_parameter("palette_index", index)
 	
+
 #------------------------------------------------------------
 func _on_chaptain_select_index_pressed(index: int) -> void:
 	SetCaptain(Captains[index])
@@ -181,8 +193,7 @@ func SaveCurrentCap() -> void:
 	
 	
 	print("Saved captain in {0}".format([targetPath]))
-
-
+	
 
 #------------------------------------------------------------
 func InventorySizeChanged() -> void:
@@ -246,6 +257,8 @@ func ItemSelected(It : Inventory_Box_Res) -> void:
 	#Make sure to load item from mod
 	var actualPath = It._ContainedItem.resource_path.replace("res:/", Main.dirs.ModDir)
 	var actuallIt : Item = load(actualPath)
+	
+	$InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/PanelContainer4/VBoxContainer/PanelContainer/VBoxContainer/UpgradeItem.visible = It._ContainedItem is ShipPart
 	
 	ItemText.text = "{0}\n{1}\n[color=#ffc315]VALUE[/color] : {2}".format([actuallIt.ItemName, actuallIt.GetItemDesc(), actuallIt.Cost])
 
@@ -390,4 +403,10 @@ func _on_inventory_ship_stats_stat_changed(stat : STAT_CONST.STATS, value : floa
 	else:
 		CurrentlySelectedCap._GetStat(stat).StatBase = value
 	UpdateInventoryBoxes()
+	SaveCurrentCap()
+
+
+func _on_palette_value_changed(value: float) -> void:
+	CurrentlySelectedCap.col = roundi(value)
+	SetCaptainCol(roundi(value))
 	SaveCurrentCap()

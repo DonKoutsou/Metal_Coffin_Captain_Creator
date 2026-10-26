@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://d0ie3g0lfeiie"]
 
-[ext_resource type="Theme" uid="uid://de7fb8k462lxb" path="res://MetalEngineBase/Theme/PopTheme.tres" id="1_qybm7"]
-[ext_resource type="StyleBox" uid="uid://ci3yyoa54a17w" path="res://MetalEngineBase/Inventory/YellowPanel.tres" id="1_sqhvk"]
 [ext_resource type="Script" uid="uid://mapkl2p7siww" path="res://CaptainCreator/main.gd" id="2_hy538"]
 [ext_resource type="PackedScene" uid="uid://sf4cxl8op2tv" path="res://MetalEngineBase/Utils/ResourcePicker.tscn" id="3_hy538"]
 [ext_resource type="PackedScene" uid="uid://bni46rep6ub0v" path="res://CaptainCreator/CaptainCreatorUI.tscn" id="3_lnq3v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hy538"]
+bg_color = Color(0, 0, 0.501961, 1)
 
 [node name="Main" type="PanelContainer" unique_id=2109229134 node_paths=PackedStringArray("resPicker", "BasePackPicker")]
 anchors_preset = 15
@@ -12,8 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_qybm7")
-theme_override_styles/panel = ExtResource("1_sqhvk")
+theme_override_styles/panel = SubResource("StyleBoxFlat_hy538")
 script = ExtResource("2_hy538")
 CptCrator = ExtResource("3_lnq3v")
 resPicker = NodePath("MarginContainer/VBoxContainer/ResourcePicker")

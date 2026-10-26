@@ -1,16 +1,28 @@
 [gd_scene format=3 uid="uid://bni46rep6ub0v"]
 
-[ext_resource type="Theme" uid="uid://de7fb8k462lxb" path="res://MetalEngineBase/Theme/PopTheme.tres" id="1_72md4"]
 [ext_resource type="Script" uid="uid://csfgatvvxvqjh" path="res://CaptainCreator/CaptainCreatorUI.gd" id="2_8328o"]
 [ext_resource type="PackedScene" uid="uid://c1dta5ogorg77" path="res://CaptainCreator/CPT_CR_ship_stat_container.tscn" id="3_vd57e"]
 [ext_resource type="PackedScene" uid="uid://b1k2h35khc40y" path="res://MetalEngineBase/Inventory/InventoryBox.tscn" id="4_yrrrb"]
-[ext_resource type="Script" uid="uid://bcrnrsyr12m2a" path="res://MetalEngineBase/Utils/InputScroll.gd" id="5_wi1ms"]
+[ext_resource type="Shader" uid="uid://dy6uaiuajknfy" path="res://MetalEngineBase/Ship/ShipColorPallete.gdshader" id="5_aljpx"]
+[ext_resource type="Texture2D" uid="uid://dys6hyi3uf27y" path="res://Godot-Window-98-Theme/textures/window.png" id="6_h4iyt"]
 [ext_resource type="PackedScene" uid="uid://dil6hywhdoauc" path="res://MetalEngineBase/Inventory/ship_deck.tscn" id="8_wi1ms"]
 [ext_resource type="Script" uid="uid://c5lpcg124sy1u" path="res://CaptainCreator/CP_CR_CaptainDispositionUI.gd" id="9_ciiba"]
 [ext_resource type="PackedScene" uid="uid://b3x1oefmigg0c" path="res://CaptainCreator/CPT_inventory_interface.tscn" id="9_tnq84"]
 [ext_resource type="Script" uid="uid://iipfkr8dt0d0" path="res://CaptainCreator/CP_CR_ShipDeckViz.gd" id="11_h4iyt"]
 [ext_resource type="PackedScene" uid="uid://muscxdppqdat" path="res://MetalEngineBase/Disposition/DispositionUI/CaptainsDispotitionUI.tscn" id="11_vd57e"]
 [ext_resource type="PackedScene" uid="uid://bbxyip8ihbpfo" path="res://CaptainCreator/CP_CR_inventory_ship_stats.tscn" id="12_vd57e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ycfd0"]
+shader = ExtResource("5_aljpx")
+shader_parameter/palette_index = 1
+shader_parameter/color_T = 0.1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ciiba"]
+texture = ExtResource("6_h4iyt")
+texture_margin_left = 4.0
+texture_margin_top = 25.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vd57e"]
 bg_color = Color(1, 1, 1, 1)
@@ -40,18 +52,16 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 1
 
-[node name="CaptainCreatorUI" type="Control" unique_id=1929975660 node_paths=PackedStringArray("CaptainName", "ShipIcon", "ItemText", "AddItemMenu", "Inventory", "Stats", "Disp", "d", "DispSliderParent")]
+[node name="CaptainCreatorUI" type="Control" unique_id=1929975660 node_paths=PackedStringArray("CaptainName", "ShipIcon", "ItemText", "AddItemMenu", "Inventory", "Stats", "Disp", "d", "DispSliderParent", "colBox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 856.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
-theme = ExtResource("1_72md4")
 script = ExtResource("2_8328o")
 StatScene = ExtResource("3_vd57e")
 ItemBoxScene = ExtResource("4_yrrrb")
@@ -64,18 +74,16 @@ Stats = NodePath("InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/PanelC
 Disp = NodePath("InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer/PanelContainer2/VBoxContainer/DispositionUI")
 d = NodePath("InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer/PanelContainer3/ShipDeck")
 DispSliderParent = NodePath("InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer/PanelContainer2/VBoxContainer/VBoxContainer2")
+colBox = NodePath("InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/VBoxContainer/HBoxContainer/Palette")
 
-[node name="InputScroll" type="ScrollContainer" parent="." unique_id=1661995240]
+[node name="InputScroll" type="ScrollContainer" parent="." unique_id=108209447]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-horizontal_scroll_mode = 3
-vertical_scroll_mode = 3
-script = ExtResource("5_wi1ms")
-metadata/_custom_type_script = "uid://bcrnrsyr12m2a"
+follow_focus = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="InputScroll" unique_id=1443653618]
 layout_mode = 2
@@ -90,7 +98,6 @@ layout_mode = 2
 
 [node name="MenuBar" type="MenuBar" parent="InputScroll/VBoxContainer/PanelContainer2/HBoxContainer" unique_id=472673988]
 layout_mode = 2
-theme_override_font_sizes/font_size = 27
 
 [node name="Select Captain" type="PopupMenu" parent="InputScroll/VBoxContainer/PanelContainer2/HBoxContainer/MenuBar" unique_id=1904929059]
 size = Vector2i(100, 251)
@@ -99,7 +106,7 @@ size = Vector2i(100, 251)
 auto_translate_mode = 1
 size = Vector2i(100, 251)
 
-[node name="ShowItStats" type="CheckButton" parent="InputScroll/VBoxContainer/PanelContainer2/HBoxContainer" unique_id=1228063095]
+[node name="ShowItStats" type="CheckBox" parent="InputScroll/VBoxContainer/PanelContainer2/HBoxContainer" unique_id=1064022758]
 layout_mode = 2
 size_flags_horizontal = 10
 button_pressed = true
@@ -136,6 +143,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/VBoxContainer" unique_id=200612640]
 texture_filter = 3
+material = SubResource("ShaderMaterial_ycfd0")
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -144,6 +152,17 @@ size_flags_vertical = 4
 [node name="ChangeShipIcon" type="Button" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/VBoxContainer" unique_id=616391956]
 layout_mode = 2
 text = "Change Picture"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/VBoxContainer" unique_id=1688958065]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/VBoxContainer/HBoxContainer" unique_id=987399624]
+layout_mode = 2
+text = "Palette Color"
+
+[node name="Palette" type="SpinBox" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/VBoxContainer/HBoxContainer" unique_id=1468510134]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="PanelContainer4" type="PanelContainer" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3" unique_id=2034851028]
 layout_mode = 2
@@ -158,13 +177,14 @@ layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/PanelContainer4/VBoxContainer" unique_id=1219644843]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ciiba")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/PanelContainer4/VBoxContainer/PanelContainer" unique_id=938586947]
 layout_mode = 2
 
 [node name="Label" type="RichTextLabel" parent="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/PanelContainer4/VBoxContainer/PanelContainer/VBoxContainer" unique_id=1932509843]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 24
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 text = "Select Item Above To Show Stats"
 fit_content = true
@@ -274,6 +294,7 @@ script = ExtResource("11_h4iyt")
 [connection signal="toggled" from="InputScroll/VBoxContainer/PanelContainer2/HBoxContainer/ShowItStats" to="." method="_on_show_it_stats_toggled"]
 [connection signal="text_changed" from="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/CapName" to="." method="_on_cap_name_text_changed"]
 [connection signal="pressed" from="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/VBoxContainer/ChangeShipIcon" to="." method="_on_change_ship_icon_pressed"]
+[connection signal="value_changed" from="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/VBoxContainer/HBoxContainer/Palette" to="." method="_on_palette_value_changed"]
 [connection signal="pressed" from="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/PanelContainer4/VBoxContainer/PanelContainer/VBoxContainer/MoveItem" to="." method="_on_move_item_pressed"]
 [connection signal="pressed" from="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/PanelContainer4/VBoxContainer/PanelContainer/VBoxContainer/UpgradeItem" to="." method="_on_upgrade_item_pressed"]
 [connection signal="pressed" from="InputScroll/VBoxContainer/PanelContainer3/HBoxContainer/VBoxContainer3/PanelContainer4/VBoxContainer/PanelContainer/VBoxContainer/RemoveItem" to="." method="_on_remove_item_pressed"]
