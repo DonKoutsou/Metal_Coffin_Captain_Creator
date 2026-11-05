@@ -30,12 +30,12 @@ func SetDataCustom(MaxValue : float, StatMetric : String, StatName : String, Sta
 	slider.step = step
 	$ProgressBar/HSlider.visible = STAT_CONST.CanHaveBase[Stat]
 
-func UpdateStatCustom(StatVal : float, ItemVar : float, ItemPenalty : float) -> void:
-	super(StatVal, ItemVar, ItemPenalty)
+func UpdateStatCustom(StatVal : float, ItemVar : float, DamageVar : float, ItemPenalty : float, tween : bool = true) -> void:
+	super(StatVal, ItemVar, DamageVar, ItemPenalty, tween)
 	$ProgressBar/HSlider.set_value_no_signal(StatVal)
 
-func UpdateStatValue(StatVal : float, ItemVar : float, ItemPenalty : float) -> void:
-	super(StatVal, ItemVar, ItemPenalty)
+func UpdateStatValue(StatVal : float, ItemVar : float, DamageVar : float, ItemPenalty : float, tween : bool = true) -> void:
+	super(StatVal, ItemVar, DamageVar, ItemPenalty, tween)
 	$ProgressBar/HSlider.set_value_no_signal(StatVal)
 
 func _on_h_slider_value_changed(value: float) -> void:

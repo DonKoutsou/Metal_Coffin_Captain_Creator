@@ -32,24 +32,24 @@ func UpdateEditorValues(ShowItemStats : bool) -> void:
 	
 	for g in Stats.size():
 		var st = stats[Stats[g].STName]
-		Stats[g].UpdateStatValue(st["Base"] , st["ShipPartBuff"], st["ShipPartPenalty"])
+		Stats[g].UpdateStatValue(st["Base"] , st["ShipPartBuff"], 0, st["ShipPartPenalty"])
 	
 	var thrust = stats[STAT_CONST.STATS.THRUST]["Base"] + stats[STAT_CONST.STATS.THRUST]["ShipPartBuff"] + stats[STAT_CONST.STATS.THRUST]["ShipPartPenalty"]
 	var weight = stats[STAT_CONST.STATS.WEIGHT]["Base"] + stats[STAT_CONST.STATS.WEIGHT]["ShipPartBuff"] + stats[STAT_CONST.STATS.WEIGHT]["ShipPartPenalty"]
 	
 	var Speed = roundi((thrust * 1000) / weight)
-	SpeedStat.UpdateStatCustom(0, Speed, 0)
+	SpeedStat.UpdateStatCustom(0, Speed, 0, 0)
 	
 	var FuelEf = stats[STAT_CONST.STATS.FUEL_EFFICIENCY]["Base"] + stats[STAT_CONST.STATS.FUEL_EFFICIENCY]["ShipPartBuff"] + stats[STAT_CONST.STATS.FUEL_EFFICIENCY]["ShipPartPenalty"]
 	var FuelCap = stats[STAT_CONST.STATS.FUEL_TANK]["Base"] + stats[STAT_CONST.STATS.FUEL_TANK]["ShipPartBuff"] + stats[STAT_CONST.STATS.FUEL_TANK]["ShipPartPenalty"]
 	
 	var eff_eff = (FuelEf / pow(weight, 0.5)) * 10
 	var ShipRange = roundi(FuelCap * eff_eff)
-	Rangestat.UpdateStatCustom(0, ShipRange, 0)
+	Rangestat.UpdateStatCustom(0, ShipRange, 0, 0)
 	
 	var NormalisedThrust = Helper.normalize_value(thrust, 0, STAT_CONST.GetStatMaxValue(STAT_CONST.STATS.THRUST))
-	NoiseStat.UpdateStatCustom(0, roundi(Helper.mapvalue(NormalisedThrust, 50, STAT_CONST.GetStatMaxValue(STAT_CONST.STATS.THRUST))), 0)
+	NoiseStat.UpdateStatCustom(0, roundi(Helper.mapvalue(NormalisedThrust, 50, STAT_CONST.GetStatMaxValue(STAT_CONST.STATS.THRUST))), 0, 0)
 	
 	var ChValue = CurrentShownCaptain.ProvidingFunds
 	var Itvalue = stats[STAT_CONST.STATS.VALUE]["Base"] + stats[STAT_CONST.STATS.VALUE]["ShipPartBuff"] + stats[STAT_CONST.STATS.VALUE]["ShipPartPenalty"]
-	ValueStat.UpdateStatCustom(ChValue, Itvalue, 0)
+	ValueStat.UpdateStatCustom(ChValue, Itvalue, 0, 0)

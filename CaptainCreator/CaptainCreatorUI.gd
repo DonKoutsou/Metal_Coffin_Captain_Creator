@@ -226,7 +226,7 @@ func UpdateDispositionSliders() -> void:
 	for g in Disp.CharacterStats:
 		var slid : CapCrStatSlider = DispSliderParent.get_child(g)
 		var disp = snappedf(Disp.CharacterStats[g], 0.1)
-		slid.UpdateStatCustom(disp, snappedf(Disp.ItemStats[g], 0.1), 0)
+		slid.UpdateStatCustom(disp, snappedf(Disp.ItemStats[g], 0.1), 0, 0)
 
 #------------------------------------------------------------
 func GetShipMaxSpeed() -> float:
