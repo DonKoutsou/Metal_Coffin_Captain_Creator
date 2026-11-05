@@ -262,7 +262,7 @@ func ItemSelected(It : Inventory_Box_Res) -> void:
 	
 	upButton.visible = It._ContainedItem is ShipPart
 	
-	ItemText.text = "{0}\n{1}\n[color=#ffc315]VALUE[/color] : {2}".format([actuallIt.ItemName, actuallIt.GetItemDesc(), actuallIt.Cost])
+	ItemText.text = "{0}\n{1}".format([actuallIt.ItemName, actuallIt.GetItemDesc()])
 
 #------------------------------------------------------------
 func _on_remove_item_pressed() -> void:
