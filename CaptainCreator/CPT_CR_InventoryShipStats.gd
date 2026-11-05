@@ -16,11 +16,10 @@ func OnStatChanged(stat : STAT_CONST.STATS, value : float) -> void:
 func UpdateEditorValues(ShowItemStats : bool) -> void:
 	var stats : Dictionary[STAT_CONST.STATS, Dictionary] = {}
 	for g in STAT_CONST.STATS.values():
-		stats[g] = {"Base" : CurrentShownCaptain.GetStatBaseValue(g), "ShipPartBuff" : 0.0, "ShipPartPenalty" : 0.0}
+		stats[g] = {"Base" : CurrentShownCaptain.GetStatBaseValue(g), "ShipPartBuff" : 0.0, "ShipPartDamage" : 0.0, "ShipPartPenalty" : 0.0}
 	
 	if (ShowItemStats):
 		for g in CurrentShownCaptain.StartingItems:
-			
 			if (g is ShipPart):
 				#Make sure to read the ship part from the mod
 				var actualPath = g.resource_path.replace("res:/", Main.dirs.ModDir)
@@ -28,11 +27,12 @@ func UpdateEditorValues(ShowItemStats : bool) -> void:
 				for up : ShipPartUpgrade in actuallPart.Upgrades:
 					stats[up.UpgradeName]["ShipPartBuff"] += up.UpgradeAmmount
 					stats[up.UpgradeName]["ShipPartPenalty"] += up.PenaltyAmmount
+					stats[up.UpgradeName]["ShipPartDamage"] += up.UpgradeAmmount - (up.UpgradeAmmount * up.Condition)
 				stats[STAT_CONST.STATS.VALUE]["ShipPartBuff"] += actuallPart.Cost
 	
 	for g in Stats.size():
 		var st = stats[Stats[g].STName]
-		Stats[g].UpdateStatValue(st["Base"] , st["ShipPartBuff"], 0, st["ShipPartPenalty"])
+		Stats[g].UpdateStatValue(st["Base"] , st["ShipPartBuff"], st["ShipPartDamage"], st["ShipPartPenalty"])
 	
 	var thrust = stats[STAT_CONST.STATS.THRUST]["Base"] + stats[STAT_CONST.STATS.THRUST]["ShipPartBuff"] + stats[STAT_CONST.STATS.THRUST]["ShipPartPenalty"]
 	var weight = stats[STAT_CONST.STATS.WEIGHT]["Base"] + stats[STAT_CONST.STATS.WEIGHT]["ShipPartBuff"] + stats[STAT_CONST.STATS.WEIGHT]["ShipPartPenalty"]
